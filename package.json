@@ -1,0 +1,23 @@
+{
+  "name": "typescript-algorithms",
+  "version": "1.0.0",
+  "description": "Algorithms and data structures implemented in TypeScript with explanations and links to further readings.",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": {
+    "name": "Евгений Колотов",
+    "email": "evgenykolotov.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgenykolotov-dev/typescript-algorithms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evgenykolotov-dev/typescript-algorithms/issues"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

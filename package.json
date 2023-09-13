@@ -4,6 +4,8 @@
   "description": "Algorithms and data structures implemented in TypeScript with explanations and links to further readings.",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest --onlyChanged --passWithNoTests",
     "test:ci": "jest --ci --onlyChanged --passWithNoTests"
   },

@@ -1,0 +1,68 @@
+name: Слияние кода в main-ветку
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  install-deps:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получение исходников из Github-репозитория
+        uses: actions/checkout@v3
+
+      - name: Кэширование NodeJS модулей
+        id: cache
+        uses: actions/cache@v3
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: node_modules
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Установка npm зависимостей
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install --ignore-scripts
+
+  eslint:
+    if: github.event.pull_request.merged == true
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получение исходников из Github-репозитория
+        uses: actions/checkout@v3
+
+      - name: Получение закэшированных NodeJS модулей
+        uses: actions/cache@v3
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: node_modules
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Проверка исходного кода линтером
+        run: npm run lint
+
+  test:
+    if: github.event.pull_request.merged == true
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получение исходников из Github-репозитория
+        uses: actions/checkout@v3
+
+      - name: Получение закэшированных NodeJS модулей
+        uses: actions/cache@v3
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: node_modules
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Тестирование исходного кода
+        run: npm run test:ci

@@ -1,0 +1,65 @@
+name: Проверка и тестирование кода
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, reopened, synchronize]
+
+jobs:
+  install-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получение исходников из Github-репозитория
+        uses: actions/checkout@v3
+
+      - name: Кэширование NodeJS модулей
+        id: cache
+        uses: actions/cache@v3
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: node_modules
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Установка npm зависимостей
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install --ignore-scripts
+
+  eslint:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получение исходников из Github-репозитория
+        uses: actions/checkout@v3
+
+      - name: Получение закэшированных NodeJS модулей
+        uses: actions/cache@v3
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: node_modules
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Проверка исходного кода линтером
+        run: npm run lint
+
+  test:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получение исходников из Github-репозитория
+        uses: actions/checkout@v3
+
+      - name: Получение закэшированных NodeJS модулей
+        uses: actions/cache@v3
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: node_modules
+          key: ${{ env.cache-name }}
+          restore-keys: ${{ env.cache-name }}
+
+      - name: Тестирование исходного кода
+        run: npm run test:ci

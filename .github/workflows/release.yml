@@ -66,3 +66,21 @@ jobs:
 
       - name: Тестирование исходного кода
         run: npm run test:ci
+
+  release:
+    if: github.event.pull_request.merged == true
+    needs: [eslint, test]
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.16
+      - run: npm ci
+      - run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

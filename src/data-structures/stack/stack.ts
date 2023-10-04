@@ -1,44 +1,75 @@
-/** Интерфейс структуры данных «Стек» */
+/**
+ * Интерфейс структуры данных «Стек».
+ * @template T - тип элементов стека.
+ */
 export interface IStack<T> {
-    /** Добавление в стек */
-    push: (value: T) => void;
-    /** Удаление из стека */
-    pop: () => T | null;
-    /** Получение элемента из стека */
-    peek: () => T | null;
-    /** Приведение стека к массиву */
-    toArray: () => Array<T>;
-    /** Приведение стека к строке */
-    toString: (callback?: (node: T) => string) => string;
+    /**
+     * Добавление элемента в стек.
+     * @param {T} value - добавляемое значение.
+     */
+    push(value: T): void;
+
+    /**
+     * Удаление элемента из стека и его возвращение.
+     * @returns {T | undefined} Удаленный элемент или undefined, если стек пуст.
+     */
+    pop(): T | undefined;
+
+    /**
+     * Получение верхнего элемента стека без его удаления.
+     * @returns {T | undefined} Верхний элемент или undefined, если стек пуст.
+     */
+    peek(): T | undefined;
+
+
+    /**
+     * Преобразование стека в массив.
+     * @returns {T[]} Массив, представляющий элементы стека в порядке их добавления.
+     */
+    toArray(): T[];
+
+    /**
+     * Преобразование стека в строку.
+     * @param {(node: T) => string} [callback] - Функция обратного вызова для преобразования элементов стека в строки.
+     * @returns {string} Строка, представляющая элементы стека.
+     */
+    toString(callback?: (node: T) => string): string;
 }
 
-/** Структура данных «Стек» */
+/**
+ * Структура данных «Стек».
+ * @template T - тип элементов стека.
+ * @implements {IStack<T>}
+ */
 export default class Stack<T> implements IStack<T> {
-    /** Массив для хранения стека */
+    /** Массив для хранения элементов стека. */
     private readonly list: Array<T> = [];
 
-    /** Добавление элемента в стек */
+    /** Добавление элемента в стек. */
     public push(value: T): void {
         this.list.push(value);
     }
 
-    /** Удаление элемента из стека */
-    public pop(): T | null {
-        return this.list.pop() ?? null;
+    /** Удаление элемента из стека и его возвращение. */
+    public pop(): T | undefined {
+        return this.list.pop();
     }
 
-    /** Получение элемента из стека */
-    public peek(): T | null {
-        return this.list.at(-1) ?? null;
+    /** Получение верхнего элемента стека без его удаления. */
+    public peek(): T | undefined {
+        return this.list.at(-1);
     }
 
-    /** Приведение стека к массиву */
-    public toArray(): Array<T> {
-        return this.list.reverse();
+    /** Преобразование стека в массив. */
+    public toArray(): T[] {
+        return this.list.slice();
     }
 
-    /** Приведение стека к строке */
+    /** Преобразование стека в строку. */
     public toString(callback?: (node: T) => string): string {
-        return this.list.map(node => callback ? callback(node) : `${node}`).reverse().toString();
+        if (callback) {
+            return this.list.map(node => callback(node)).join(',');
+        }
+        return this.list.join(',');
     }
 }

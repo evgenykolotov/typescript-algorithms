@@ -14,13 +14,13 @@ describe('Тестирование структуры данных «Стек»'
         stack.push(2);
         expect(stack).toBeDefined();
         expect(stack.peek()).toBe(2);
-        expect(stack.toString()).toBe('2,1');
-        expect(stack.toArray()).toEqual([2, 1]);
+        expect(stack.toString()).toBe('1,2');
+        expect(stack.toArray()).toEqual([1, 2]);
     });
 
     it('Получение элемента из «Стека»', () => {
         const stack = new Stack<number>();
-        expect(stack.peek()).toBeNull();
+        expect(stack.peek()).toBeUndefined();
         stack.push(1);
         stack.push(2);
         expect(stack.peek()).toBe(2);
@@ -31,12 +31,12 @@ describe('Тестирование структуры данных «Стек»'
 
     it('Удаление элемента из «Стека»', () => {
         const stack = new Stack<number>();
-        expect(stack.pop()).toBeNull();
+        expect(stack.pop()).toBeUndefined();
         stack.push(1);
         stack.push(2);
         expect(stack.pop()).toBe(2);
         expect(stack.pop()).toBe(1);
-        expect(stack.pop()).toBeNull();
+        expect(stack.pop()).toBeUndefined();
     });
 
     it('Операции push/pop с objects', () => {
@@ -45,7 +45,7 @@ describe('Тестирование структуры данных «Стек»'
         const stack = new Stack<TStackData>();
         stack.push({ value: 'test1', key: 'key1' });
         stack.push({ value: 'test2', key: 'key2' });
-        expect(stack.toString(stringifier)).toBe('key2:test2,key1:test1');
+        expect(stack.toString(stringifier)).toBe('key1:test1,key2:test2');
         expect(stack.pop()?.value).toBe('test2');
         expect(stack.pop()?.value).toBe('test1');
     });

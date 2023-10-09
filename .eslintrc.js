@@ -2,6 +2,7 @@ module.exports = {
     root: true,
     env: { node: true, jest: true },
     parser: '@typescript-eslint/parser',
+    ignorePatterns: [".eslintrc.js"],
     parserOptions: {
         sourceType: 'module',
         ecmaVersion: 'latest',

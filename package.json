@@ -1,0 +1,30 @@
+{
+  "name": "typescript-algorithms",
+  "version": "0.1.0",
+  "description": "Algorithms and data-structures implemented on TypeScript",
+  "keywords": [
+    "interview",
+    "javascript",
+    "typescript",
+    "algorithms",
+    "design-patterns",
+    "data-structures",
+    "computer-science"
+  ],
+  "author": {
+    "name": "Evgeny Kolotov",
+    "email": "evgenykolotov.dev@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgenykolotov/typescript-algorithms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evgenykolotov/typescript-algorithms/issues"
+  },
+  "homepage": "https://github.com/evgenykolotov/typescript-algorithms#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
